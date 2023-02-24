@@ -1,16 +1,5 @@
 import { useEffect, useState } from 'react';
-
-interface User {
-	displayName: string;
-	email: string,
-	rol: Roles;
-	dependency: Dependencies;
-	lastName: string;
-	username: string;
-}
-
-type Roles = | 'admin' | 'shop' | 'sales' | 'user' | '';
-type Dependencies = | 'administration' | 'shop' | 'sales' | 'humanity' | '';
+import { User } from '../interfaces/user';
 
 const initialForm = {} as User
 
@@ -20,15 +9,11 @@ export const useForm = () => {
 
 	const onInputChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => {
 		const { name, value } = e.target;
-		
-		
+
 		setFormState({
 			...formState,
 			[name]: value
 		});
-		
-		console.log(value);
-		console.log(name);
 	};
 
 	useEffect(() => {
@@ -43,8 +28,4 @@ export const useForm = () => {
 		onInputChange
 
 	};
-};
-
-interface Form {
-	[x:string]:any
 };

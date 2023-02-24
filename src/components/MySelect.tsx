@@ -1,5 +1,3 @@
-import { generateId } from "../../../../helpers";
-
 interface Props {
 	className: string;
 	htmlFor?: string;
@@ -9,15 +7,15 @@ interface Props {
 	type: string;
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-	options:Options[]
+	options: Options[]
 }
 
 type Options = {
-	key:string
-	value:string
+	key: string
+	value: string
 }
 
-export const MySelect = ({ className, htmlFor, id, label, name, type, value,options, onChange }: Props) => {
+export const MySelect = ({ className, htmlFor, id, label, name, type, value, options, onChange }: Props) => {
 	return (
 
 		<>
@@ -31,7 +29,7 @@ export const MySelect = ({ className, htmlFor, id, label, name, type, value,opti
 			>
 				<option value="">Choice a {name}</option>
 				{
-					options.map(option=>(
+					options.map(option => (
 						<option key={option.key} value={option.key}>{option.value}</option>
 					))
 				}

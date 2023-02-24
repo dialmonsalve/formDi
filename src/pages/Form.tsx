@@ -1,69 +1,19 @@
 import { useContext } from "react";
-import { MyInputText } from "../context/components/MyInputText";
-import { MySelect } from "../context/components/MySelect";
+import { MySelect, MyInputText, FormDi } from "../components";
+import { UserContext } from "../context/UserContext";
 
-import { createContext, ReactElement } from "react";
-import { useForm } from "../context/hooks/useForm";
+export const Form = () => {
 
-interface ContextUserProps {
-	user:User;
-	onInputChange: ( e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> )=>void;
-	onSubmit:(e:React.FormEvent, user:User)=>void
-}
-
-interface Props {
-	children?:ReactElement |ReactElement[] ;
-	user:User;
-}
-interface User {
-	displayName: string;
-	email: string,
-	rol: Roles;
-	dependency: Dependencies;
-	lastName: string;
-	username: string;
-}
-
-type Roles = | 'admin' | 'shop' | 'sales' | 'user' | '';
-type Dependencies = | 'administration' | 'shop' | 'sales' | 'humanity' | '';
-
-const UserContext = createContext({} as ContextUserProps)
-const { Provider } = UserContext;
-
-export const FormDi = ({children, user}:Props) => {
-
-	const { onInputChange } = useForm()
-
-	const onSubmit = (e:React.FormEvent) => {
-		e.preventDefault()
-
-		const { value } = e.target.displayName
-		console.log(value) 
-	}
-
-	return (
-		<Provider value={{
-			onInputChange,
-			user,
-			onSubmit
-		}} >
-			<form onSubmit={onSubmit} >
-
-				{children}
-				
-			</form>
-
-		</Provider>
-	)
-}
-
-export const Probe = () => {
 	const {onInputChange, user} = useContext(UserContext)
 
 	return (
 
 		<FormDi 
 		user={user}
+		onSubmit = {(values)=>{
+			console.log(values);
+		}}
+
 		>
 			<MyInputText
 				className="input-text"
@@ -139,7 +89,7 @@ export const Probe = () => {
 				id="dependency"
 				onChange={onInputChange} />
 
-				<input type="submit" value="enviar" />
+			<input type="submit" value="enviar" />
 
 		</FormDi>
 

@@ -1,4 +1,3 @@
-import  formJson from '../../../data/user-form.json';
 
 interface ValidationRule {
 	test: (value: string) => boolean | string;
