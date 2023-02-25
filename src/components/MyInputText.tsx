@@ -1,16 +1,8 @@
-interface Props {
-	className: string;
-	htmlFor?: string;
-	id?: string;
-	label: string;
-	name: string;
-	type: string;
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
+import { PropsInputText as Props } from "../interfaces/user"
+
 export const MyInputText = ({ className, htmlFor, id, label, name, type, value, onChange }: Props) => {
 	return (
-		<>
+		<div className="form-group">
 			<label htmlFor={htmlFor}>{label}</label>
 			<input
 				type={type}
@@ -20,6 +12,6 @@ export const MyInputText = ({ className, htmlFor, id, label, name, type, value, 
 				id={id}
 				className={className}
 			/>
-		</>
+		</div>
 	)
 }

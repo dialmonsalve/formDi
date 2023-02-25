@@ -1,20 +1,28 @@
 import { useContext } from "react";
 import { MySelect, MyInputText, FormDi } from "../components";
+import { validationSchema } from "../hooks/useValidation";
 import { UserContext } from "../context/UserContext";
 
 export const Form = () => {
 
-	const {onInputChange, user} = useContext(UserContext)
+	const {
+		user,
+		user: { displayName, email, username, rol, dependency, lastName },
+		onInputChange,
+	} = useContext(UserContext)
 
 	return (
 
-		<FormDi 
-		user={user}
-		onSubmit = {(values)=>{
-			console.log(values);
-		}}
+		<FormDi
+
+			user={user}
+			onSubmit={(values) => {
+				console.log(values);
+			}}
+			validationSchema={validationSchema}
 
 		>
+
 			<MyInputText
 				className="input-text"
 				id="displayName"
@@ -22,7 +30,7 @@ export const Form = () => {
 				label="displayName"
 				name="displayName"
 				type="text"
-				value={user?.displayName}
+				value={displayName}
 				onChange={onInputChange} />
 
 			<MyInputText
@@ -32,7 +40,7 @@ export const Form = () => {
 				label="username"
 				name="username"
 				type="text"
-				value={user?.username}
+				value={username}
 				onChange={onInputChange} />
 
 			<MyInputText
@@ -42,7 +50,7 @@ export const Form = () => {
 				label="lastName"
 				name="lastName"
 				type="text"
-				value={user?.lastName}
+				value={lastName}
 				onChange={onInputChange} />
 
 			<MyInputText
@@ -52,30 +60,31 @@ export const Form = () => {
 				label="email"
 				name="email"
 				type="text"
-				value={user?.email}
+				value={email}
 				onChange={onInputChange} />
 
 			<MySelect
-				className="select-class"
+				className="input-select"
 				label="rol"
 				name="rol"
 				key={1}
 				options={[
-					{key:"1", value:"shopping"},
-					{key:"2", value:"sales"},
-					{key:"3", value:"user"}
+					{ key: "1", value: "shopping" },
+					{ key: "2", value: "sales" },
+					{ key: "3", value: "user" }
 				]}
 				type="select"
-				value={user?.rol}
+				value={rol}
 				htmlFor="rol"
 				id="rol"
-				onChange={onInputChange}			
+				onChange={onInputChange}
 			/>
 
 			<MySelect
-				className="select-class"
+				className="input-select"
 				label="dependency"
 				name="dependency"
+				onChange={onInputChange}
 				key={2}
 				options={[
 					{ key: "1", value: "administration" },
@@ -84,11 +93,10 @@ export const Form = () => {
 					{ key: "4", value: "humanity department" },
 				]}
 				type="select"
-				value={user?.dependency}
+				value={dependency}
 				htmlFor="dependency"
 				id="dependency"
-				onChange={onInputChange} />
-
+			/>
 			<input type="submit" value="enviar" />
 
 		</FormDi>

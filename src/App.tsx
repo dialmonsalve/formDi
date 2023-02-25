@@ -1,4 +1,5 @@
 import { Form } from "./pages/Form"
+import './index.css';
 
 function App() {
 

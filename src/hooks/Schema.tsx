@@ -4,7 +4,7 @@ interface ValidationRule {
 	message: string;
 }
 
-class StringValidator {
+export class StringValidator {
 	private rules: ValidationRule[];
 
 	constructor() {
@@ -38,8 +38,7 @@ class StringValidator {
 	email(message: string): this {
 		this.rules.push({
 			test: (value: string) => {
-				// A basic email validation regular expression
-				const emailRegex = /^\S+@\S+\.\S+$/;
+				const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 				return emailRegex.test(value);
 			},
 			message,
@@ -57,35 +56,4 @@ class StringValidator {
 		}
 		return errors;
 	}
-}
-
-const initialValues: { [key: string]: any } = {};
-const requiredValues: { [key: string]: any } = {};
-
-for (const input of formJson) {
-
-	initialValues[input.name] = input.value;
-
-	if (!input.value) continue;
-
-	let schema = new StringValidator()
-
-	for (const rule of input.validations) {
-
-		if (rule.type === 'required') {
-			schema = schema.required(rule.message)
-		}
-		if (rule.type === 'minLength') {
-			schema = schema.min((rule as any).value, rule.message)
-		}
-		if (rule.type === 'email') {
-			schema = schema.email(rule.message)
-		}
-	}
-	requiredValues[input.name] = schema
-}
-export const Schema = () => {
-	return (
-		<div>Schema</div>
-	)
 }

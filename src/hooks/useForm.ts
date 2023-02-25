@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
-import { User } from '../interfaces/user';
+import { useEffect, useMemo, useState } from 'react';
+import { Form } from '../interfaces/user';
 
-const initialForm = {} as User
-
-export const useForm = () => {
+export const useForm = <T extends Form> (initialForm:T) => {
 
 	const [formState, setFormState] = useState(initialForm);
 
-	const onInputChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => {
+	useEffect(() => {
+		setFormState(initialForm);
+	}, [initialForm]);
+
+
+	const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
 
 		setFormState({
@@ -16,16 +19,18 @@ export const useForm = () => {
 		});
 	};
 
-	useEffect(() => {
-		setFormState( initialForm );
-	}, [ initialForm ]);
+	const onResetForm = () => {
+
+		setFormState(initialForm)
+	}
 
 
 	return {
 		...formState,
 		formState,
 
-		onInputChange
+		onInputChange,
+		onResetForm
 
 	};
 };

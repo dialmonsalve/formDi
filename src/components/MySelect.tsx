@@ -1,24 +1,9 @@
-interface Props {
-	className: string;
-	htmlFor?: string;
-	id?: string;
-	label: string;
-	name: string;
-	type: string;
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-	options: Options[]
-}
-
-type Options = {
-	key: string
-	value: string
-}
+import { PropsSelect as Props} from "../interfaces/user"
 
 export const MySelect = ({ className, htmlFor, id, label, name, type, value, options, onChange }: Props) => {
 	return (
 
-		<>
+		<div className="form-group">
 			<label htmlFor={htmlFor}>{label}</label>
 			<select
 				className={className}
@@ -34,6 +19,6 @@ export const MySelect = ({ className, htmlFor, id, label, name, type, value, opt
 					))
 				}
 			</select>
-		</>
+		</div>
 	)
 }

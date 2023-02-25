@@ -1,34 +1,29 @@
-import { ReactElement } from 'react';
-import { User } from '../interfaces/user';
+import { PropsFormDi as Props, User } from '../interfaces/user';
 
-interface Props {
-	children?: ReactElement | ReactElement[];
-	user: User;
-	onSubmit?: (user:User) => void;
-}
+export const FormDi = ({ children, user, onSubmit, validationSchema }: Props)=> {
 
-export const FormDi = ({ children, user, onSubmit }: Props) => {
+	const onSubmitted = (e: React.FormEvent) => {
+		e.preventDefault();
 
-		const onSubmitted = (e:React.FormEvent) => {
-			e.preventDefault()
-	
-			for(const fields of Object.entries(e.target)){
-				for (const field of Object.entries(fields)){
-					if(typeof field[1].value !== 'undefined' && field[1].type !== 'submit'){
-						user[field[1].name] = field[1].value
-					};
+		let newUser: typeof user = {} as User;
+
+		for (const field of Object.entries(e.target)) {
+				if (typeof field[1].value !== 'undefined' && field[1].type !== 'submit') {
+					newUser[field[1].name] = field[1].value;
 				};
-			};
 
-			if(user.displayName===''){//! Implement validation here
-				console.log("first")
-			}
-			return onSubmit&& onSubmit(user);
-		}
+		};		
+		validationSchema &&  validationSchema(newUser)
+
+		return onSubmit && onSubmit(newUser);
+	};
 
 	return (
-			<form onSubmit={ onSubmitted } >
-				{children}
-			</form>
-	)
+		<form
+			className='container'
+			onSubmit={onSubmitted}
+		>
+			{children}
+		</form>
+	);
 }
