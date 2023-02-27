@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
+import { InitialForm, InitialValidations } from "./initialState";
 
-export interface User extends Form {
+export interface User extends InitialForm {
 	displayName: string;
 	email: string,
 	rol: Roles;
@@ -12,48 +12,11 @@ export interface User extends Form {
 type Roles = | 'admin' | 'shop' | 'sales' | 'user' | '';
 type Dependencies = | 'administration' | 'shop' | 'sales' | 'humanity' | '';
 
-
-export interface Form {
-	[key: string]: any
-}
-
-
-export interface PropsFormDi {
-	children?: ReactElement | ReactElement[];
-	user: User;
-	onSubmit?: (user: User) => void;
-	validationSchema?(user: User): void
-}
-
-export interface PropsInputText {
-	className: string;
-	htmlFor?: string;
-	id?: string;
-	label: string;
-	name: string;
-	type: string;
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
-
-export interface PropsSelect {
-	className: string;
-	htmlFor?: string;
-	id?: string;
-	label: string;
-	name: string;
-	type: string;
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-	options: Options[]
-}
-
-type Options = {
-	key: string
-	value: string
-}
-
-export interface ProviderProps {
-	children?: ReactElement | ReactElement[];
-	user: User;
+export interface UserValidation extends InitialValidations {
+	displayNameValid: [(value:any)=>boolean, null | string];
+	emailValid?: [(value:any)=>boolean, null | string];
+	rolValid?: [(value:any)=>boolean, null | string];
+	dependencyValid?: [(value:any)=>boolean, null | string];
+	lastNameValid?: [(value:any)=>boolean, null | string];
+	usernameValid?: [(value:any)=>boolean, null | string];
 }

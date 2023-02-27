@@ -1,4 +1,4 @@
-import { PropsInputText as Props } from "../interfaces/user"
+import { PropsInputText as Props } from "../interfaces/initialState"
 
 export const MyInputText = ({ className, htmlFor, id, label, name, type, value, onChange }: Props) => {
 	return (

@@ -30,7 +30,6 @@ export const createValidator = (rules: ValidationRule[]) => {
     email(message: string): typeof this {
       this.rules.push({
         test: (value: string) => {
-          // A basic email validation regular expression
           const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return emailRegex.test(value);
         },

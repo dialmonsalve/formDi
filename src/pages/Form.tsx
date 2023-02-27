@@ -1,26 +1,32 @@
 import { useContext } from "react";
 import { MySelect, MyInputText, FormDi } from "../components";
-import { validationSchema } from "../hooks/useValidation";
-import { UserContext } from "../context/UserContext";
+
+import { ContextUserProps, InitialContext } from "../context/InitialContext";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { User, UserValidation } from "../interfaces/user";
+import {  validationSchema } from "../hooks/validation";
 
 export const Form = () => {
 
-	const {
-		user,
-		user: { displayName, email, username, rol, dependency, lastName },
-		onInputChange,
-	} = useContext(UserContext)
+	const { 
+		formNewState,
+		initialState,
+		onInputChange
+	} = useContext<ContextUserProps<User>>(InitialContext)
+
+	const { dependency, displayName, email, lastName, rol, username } = initialState
+
+	// const{ displayNameValid, usernameValid } = formValidation
 
 	return (
 
 		<FormDi
 
-			user={user}
-			onSubmit={(values) => {
-				console.log(values);
-			}}
-			validationSchema={validationSchema}
-
+			initialState={initialState}
+			// onSubmit={(values) => {
+			// 	console.log(values);
+			// }}
+			validationSchema={validationSchema(formNewState)}
 		>
 
 			<MyInputText
@@ -32,6 +38,11 @@ export const Form = () => {
 				type="text"
 				value={displayName}
 				onChange={onInputChange} />
+			<ErrorMessage
+				show={false}
+				fieldName="displayName"
+				type="error"
+			/>
 
 			<MyInputText
 				className="input-text"
@@ -42,6 +53,11 @@ export const Form = () => {
 				type="text"
 				value={username}
 				onChange={onInputChange} />
+				<ErrorMessage
+				show={false}
+				fieldName="username"
+				type="error"
+			/>
 
 			<MyInputText
 				className="input-text"
@@ -62,12 +78,16 @@ export const Form = () => {
 				type="text"
 				value={email}
 				onChange={onInputChange} />
+				<ErrorMessage
+				show={true}
+				fieldName="email"
+				type="error"
+			/>
 
 			<MySelect
 				className="input-select"
 				label="rol"
 				name="rol"
-				key={1}
 				options={[
 					{ key: "1", value: "shopping" },
 					{ key: "2", value: "sales" },
@@ -85,7 +105,6 @@ export const Form = () => {
 				label="dependency"
 				name="dependency"
 				onChange={onInputChange}
-				key={2}
 				options={[
 					{ key: "1", value: "administration" },
 					{ key: "2", value: "shop department" },

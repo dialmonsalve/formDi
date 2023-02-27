@@ -1,19 +1,21 @@
 import { useForm } from "../hooks/useForm";
-import { ProviderProps as Props } from "../interfaces/user";
-import { UserContext } from "./UserContext";
+import { ProviderProps as Props } from "../interfaces/initialState";
+import { InitialContext } from "./InitialContext";
 
-export const UserProviderContext = ({ children, user }: Props) => {
+export const UserProviderContext = ({ children, initialState, /* initialValidations */ }: Props) => {
 
-	const { onInputChange } = useForm(user)
+	const { formNewState, onInputChange, onReset, initialValidationState } = useForm(initialState)
 
 	return (
-		<UserContext.Provider value={{
+		<InitialContext.Provider value={{
 			onInputChange,
-			user,
+			formNewState,
+			initialState,
+			onReset
 		}} >
 
 			{children}
 
-		</UserContext.Provider>
+		</InitialContext.Provider>
 	)
 }

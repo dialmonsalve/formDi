@@ -1,4 +1,4 @@
-import { PropsSelect as Props} from "../interfaces/user"
+import { PropsSelect as Props } from "../interfaces/initialState"
 
 export const MySelect = ({ className, htmlFor, id, label, name, type, value, options, onChange }: Props) => {
 	return (
@@ -11,6 +11,7 @@ export const MySelect = ({ className, htmlFor, id, label, name, type, value, opt
 				name={name}
 				onChange={onChange}
 				value={value}
+				key={name}
 			>
 				<option value="">Choice a {name}</option>
 				{

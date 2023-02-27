@@ -1,21 +1,31 @@
-import { PropsFormDi as Props, User } from '../interfaces/user';
+import { useContext } from 'react';
+import { InitialContext } from '../context/InitialContext';
+import { PropsFormDi as Props, InitialForm } from '../interfaces/initialState';
 
-export const FormDi = ({ children, user, onSubmit, validationSchema }: Props)=> {
+export const FormDi = ({ children, initialState, onSubmit }: Props) => {
+
+	// const { isValid } = validationSchema()
 
 	const onSubmitted = (e: React.FormEvent) => {
 		e.preventDefault();
 
-		let newUser: typeof user = {} as User;
+		const newState: typeof initialState = {} as InitialForm;
 
 		for (const field of Object.entries(e.target)) {
-				if (typeof field[1].value !== 'undefined' && field[1].type !== 'submit') {
-					newUser[field[1].name] = field[1].value;
-				};
+			if (typeof field[1].value !== 'undefined' && field[1].type !== 'submit') {
+				newState[field[1].name] = field[1].value;
+			};
 
-		};		
-		validationSchema &&  validationSchema(newUser)
+		};
 
-		return onSubmit && onSubmit(newUser);
+		// if (isValid){
+		// 	console.log('not valid');
+		// 	return
+		// }
+
+		console.log('pass valid');
+
+		return onSubmit && onSubmit(newState);
 	};
 
 	return (

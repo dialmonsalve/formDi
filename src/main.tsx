@@ -2,12 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import { UserProviderContext } from './context/ProviderContext'
-import { User } from './interfaces/user'
+import { InitialForm } from './interfaces/initialState'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <UserProviderContext user={{} as User} >
-        <App />
+    <UserProviderContext 
+      initialState={ {} as InitialForm } 
+      >
+      <App />
     </UserProviderContext>
   </React.StrictMode>,
 )

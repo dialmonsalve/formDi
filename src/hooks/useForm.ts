@@ -1,36 +1,74 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Form } from '../interfaces/user';
+import { InitialForm } from '../interfaces/initialState';
 
-export const useForm = <T extends Form> (initialForm:T) => {
+export const useForm = <T extends InitialForm>(initialForm: T/* , formValidations?: InitialForm */) => {
 
-	const [formState, setFormState] = useState(initialForm);
+	const [formNewState, setFormNewState] = useState(initialForm);
+
+	// const [initialValidationState, setFormValidation] = useState(formValidations)
 
 	useEffect(() => {
-		setFormState(initialForm);
+		setFormNewState(initialForm);
 	}, [initialForm]);
 
+	// useEffect(() => {
+
+	// 	if (Object.keys(formNewState).length > 0) {
+	//     // code to run once when data is loaded
+	// 		createValidators()
+	// 	}	
+	// }, [formNewState])
+
+	// const isFormValid = useMemo(() => {
+
+	// 	if (typeof initialValidationState === 'undefined') return;
+
+	// 	for (const formValue of Object.keys(initialValidationState)) {
+	// 		if (initialValidationState[formValue] !== null) return false;
+	// 	}
+	// 	return true;
+
+	// }, [initialValidationState])
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
 
-		setFormState({
-			...formState,
+		setFormNewState((prevFormState) => ({
+			...prevFormState,
 			[name]: value
-		});
+		}));
 	};
 
-	const onResetForm = () => {
+	// const createValidators = () => {
 
-		setFormState(initialForm)
+	// 	const formCheckedValues: InitialForm = {};
+
+	// 	if (typeof formValidations === 'undefined') return
+
+	// 	for (const formField of Object.keys(formValidations)) {
+	// 		const [fn, errorMessage] = formValidations[formField];
+	// 		formCheckedValues[`${formField}Valid`] = fn(formNewState[formField]) ? null : errorMessage;
+	// 	}
+	// 	console.log(formCheckedValues);
+
+	// 	setFormValidation(formCheckedValues);
+	// }
+
+	const onResetForm = () => {
+		setFormNewState(initialForm);
 	}
 
 
 	return {
-		...formState,
-		formState,
+		...formNewState,
+		formNewState,
 
 		onInputChange,
-		onResetForm
+		onResetForm,
+
+		// ...initialValidationState,
+		// initialValidationState,
+		// isFormValid
 
 	};
 };
