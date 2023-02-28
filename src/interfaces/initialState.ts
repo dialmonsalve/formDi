@@ -1,18 +1,22 @@
 import { ReactElement } from "react";
+import { createValidator } from "../hooks/validationSchema";
 
 export interface InitialForm {
 	[key: string ]: any
 }
 
-interface ValidationSchemaOutput {
-  isValid: boolean;
+export interface ValidFormField {
+  [fieldName: string]: ReturnType<typeof createValidator>;
 }
+
+export type ValidFormState = ValidFormField[] | Record<string, string[]>;
+
 
 export interface PropsFormDi {
 	children?: ReactElement | ReactElement[];
 	initialState: InitialForm;
 	onSubmit?: (formState: InitialForm) => void;
-	validationSchema?:ValidationSchemaOutput;
+	validationSchema?:ValidFormState;
 	onReset?:()=>void
 }
 
@@ -28,6 +32,7 @@ export interface InitialValidations extends InitialForm {
 export interface ProviderProps {
 	children?: ReactElement | ReactElement[];
 	initialState: InitialForm;
+	initialValidations?:InitialValidations
 }
 
 interface Input {
@@ -53,4 +58,9 @@ export interface PropsSelect extends Input{
 type Options = {
 	key: string
 	value: string
+}
+
+export interface ValidationRule {
+	test: (value: string) => boolean | string;
+	message: string;
 }

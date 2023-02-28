@@ -9,35 +9,29 @@ interface ValidationRule {
 export const validationSchema = (user:User) => {
 
   const { email, displayName, dependency, lastName, rol, username } = user
-
-  const getValidator = (fieldName: string) => {
-    switch (fieldName) {
-      case 'email':
-        return createValidator([] as ValidationRule[])
-          .required('Email field is required')
-          .email('Email not valid')
-      case 'displayName':
-        return createValidator([] as ValidationRule[])
-          .required('Name field is required')
-          .min(4, 'The field must be at least 4 characters')
-      default:
-        return (createValidator([] as ValidationRule[]))
-    }
-  }
   
-  const errors: { [key: string]: string[] } = {};
+
+  const emailValid = createValidator([] as ValidationRule[])
+    .required('email is required')
+    .min(5,"The email needs at least 5 characters")
+
+    const error = emailValid.validate(email)
+
+    
+    console.log(error);
 
 
-  for (const fieldName of Object.keys(user)) {
-    const validator = getValidator(fieldName)
-    const fieldValue = user[fieldName]
-    errors[fieldName] = validator.validate(fieldValue)
-  }
+    
+    const errores : {[key:string]:string[] } = {}
 
+
+    
+
+  
 	const isValid = false
 
 	return {
 		isValid,
-    errors
+    error
 	}
 }

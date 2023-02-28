@@ -1,30 +1,17 @@
 import { useContext } from "react";
 import { InitialContext } from "../context/InitialContext";
-import { validationSchema } from "../hooks/validation";
-import { createValidator } from "../hooks/validationSchema";
 
 interface Props {
 	fieldName: string;
 	type: 'error' | 'success';
-	show?: boolean
 }
 
-interface ValidationRule {
-	test: (value: string) => boolean | string;
-	message: string;
+export const ErrorMessage = ({ type, fieldName }: Props) => {
 
-}
+	const { isFormValid, initialValidationState } = useContext(InitialContext)
 
-export const ErrorMessage = ({ show = false, type, fieldName }: Props) => {
+	const errorMessages = initialValidationState[`${fieldName}Valid`]
 
-	const { formNewState } = useContext( InitialContext )
-
-	const { errors } = validationSchema( formNewState )
-	
-	const errorMessages = Object.entries(errors)
-
-	console.log(errorMessages);
-	
 
 	const diStyle = {
 		backgroundColor: type === 'error' ? '#f007079b' : '#42db42ea',
@@ -38,17 +25,16 @@ export const ErrorMessage = ({ show = false, type, fieldName }: Props) => {
 		width: '100%',
 	};
 	return (
-		errorMessages &&
-		show ?
+
+		!isFormValid && initialValidationState[`${fieldName}Valid`]&&
+
 
 			<div style={{ display: "flex", width: "100%", flexDirection: "column", alignItems: "center" }} >
-				{errorMessages.map((errorMessage, index) => (
-
-					<p style={diStyle} key={index} >{errorMessage}</p>
-
-				))}
+					{errorMessages.map((errorMessage:string, index:string) => (
+          <p key={index} style={diStyle}>{errorMessage}</p>
+        ))}
 			</div>
-			: <></>
+
 
 	)
 }

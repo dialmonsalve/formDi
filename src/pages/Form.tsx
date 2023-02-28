@@ -3,30 +3,52 @@ import { MySelect, MyInputText, FormDi } from "../components";
 
 import { ContextUserProps, InitialContext } from "../context/InitialContext";
 import { ErrorMessage } from "../components/ErrorMessage";
-import { User, UserValidation } from "../interfaces/user";
-import {  validationSchema } from "../hooks/validation";
+import { User } from "../interfaces/user";
+import { ValidationRule, ValidFormState } from "../interfaces/initialState";
+import { createValidator } from "../hooks/validationSchema";
 
 export const Form = () => {
 
-	const { 
-		formNewState,
+	const validationSchema:ValidFormState = [
+
+		{
+			username: createValidator([] as ValidationRule[])
+				.required('Field displayName is required')
+				.min(4, 'Field must be at least 4 characters')
+		}
+	]
+
+	const onsubmit = () => {
+		console.log('Ac{a');
+	}
+
+	const {
 		initialState,
-		onInputChange
-	} = useContext<ContextUserProps<User>>(InitialContext)
+		onInputChange,
+	} = useContext<ContextUserProps<User, ValidFormState>>(InitialContext)
 
 	const { dependency, displayName, email, lastName, rol, username } = initialState
-
-	// const{ displayNameValid, usernameValid } = formValidation
 
 	return (
 
 		<FormDi
-
 			initialState={initialState}
-			// onSubmit={(values) => {
-			// 	console.log(values);
-			// }}
-			validationSchema={validationSchema(formNewState)}
+			onSubmit={(value)=>
+			console.log(value)
+			}
+			validationSchema={[
+
+				{
+					username: createValidator([] as ValidationRule[])
+						.required('Field username is required')
+						.min(4, 'Field must be at least 4 characters')
+				},
+				{
+					displayName: createValidator([] as ValidationRule[])
+					.required('Field displayName is required')
+					.max(10, 'Field must be max 4 characters')
+				}
+			]}
 		>
 
 			<MyInputText
@@ -39,7 +61,6 @@ export const Form = () => {
 				value={displayName}
 				onChange={onInputChange} />
 			<ErrorMessage
-				show={false}
 				fieldName="displayName"
 				type="error"
 			/>
@@ -53,8 +74,7 @@ export const Form = () => {
 				type="text"
 				value={username}
 				onChange={onInputChange} />
-				<ErrorMessage
-				show={false}
+			<ErrorMessage
 				fieldName="username"
 				type="error"
 			/>
@@ -78,8 +98,7 @@ export const Form = () => {
 				type="text"
 				value={email}
 				onChange={onInputChange} />
-				<ErrorMessage
-				show={true}
+			<ErrorMessage
 				fieldName="email"
 				type="error"
 			/>

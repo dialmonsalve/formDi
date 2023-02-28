@@ -1,31 +1,53 @@
-import { useContext } from 'react';
-import { InitialContext } from '../context/InitialContext';
+import { useEffect, useState } from 'react';
 import { PropsFormDi as Props, InitialForm } from '../interfaces/initialState';
 
-export const FormDi = ({ children, initialState, onSubmit }: Props) => {
+const hello = {}
 
-	// const { isValid } = validationSchema()
+export const FormDi = ({ children, initialState, onSubmit, validationSchema=[] }: Props) => {
+
+	const [formState, setFormState] = useState<InitialForm>( initialState );
+	const [formValidation, setFormValidation] = useState(hello)
+
+	useEffect(() => {
+		validations()
+	}, [validationSchema])
+
+	const validations = ()=>{
+
+		validationSchema.forEach((field:{})=>{
+	
+			Object.entries(field).map((name)=>{
+	
+				name[1].rules.map((rule)=>{
+					console.log(rule.message);
+					setFormValidation(rule.message)
+					
+				})
+			})
+	
+			
+		})
+	}
+	
+
+	
+	
 
 	const onSubmitted = (e: React.FormEvent) => {
-		e.preventDefault();
 
-		const newState: typeof initialState = {} as InitialForm;
+		e.preventDefault();
 
 		for (const field of Object.entries(e.target)) {
 			if (typeof field[1].value !== 'undefined' && field[1].type !== 'submit') {
-				newState[field[1].name] = field[1].value;
+				formState[field[1].name] = field[1].value;
 			};
-
 		};
 
-		// if (isValid){
-		// 	console.log('not valid');
-		// 	return
-		// }
+		setFormState((prev)=>({
+			...prev
+		}))
 
-		console.log('pass valid');
-
-		return onSubmit && onSubmit(newState);
+		return onSubmit && onSubmit({ formState });
 	};
 
 	return (
