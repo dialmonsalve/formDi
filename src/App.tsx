@@ -1,12 +1,13 @@
-import { Form } from "./pages/Form"
+import { AppUser } from './app/AppUser';
+
 import './index.css';
 
 function App() {
 
   return (
-    <div >
-      <Form/>
-    </div>
+    <>
+      <AppUser />
+    </>
   )
 }
 

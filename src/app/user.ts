@@ -1,4 +1,4 @@
-import { InitialForm, ValidFormState } from "./initialState";
+import { InitialForm } from "../formDi/interfaces/initialState";
 
 export interface User extends InitialForm {
 	displayName: string;
@@ -7,6 +7,7 @@ export interface User extends InitialForm {
 	dependency: Dependencies;
 	lastName: string;
 	username: string;
+	password: string;
 }
 
 type Roles = | 'admin' | 'shop' | 'sales' | 'user' | '';

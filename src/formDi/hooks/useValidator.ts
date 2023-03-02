@@ -1,9 +1,6 @@
-interface ValidationRule {
-  test: (value: string) => boolean | string;
-  message: string;
-}
+import { ValidationRule } from "../interfaces/initialState";
 
-export const createValidator = (rules: ValidationRule[]) => {
+export const useValidator = (rules: ValidationRule[]) => {
   return {
     rules,
     required(message: string): typeof this {
