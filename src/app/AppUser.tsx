@@ -20,7 +20,7 @@ export const AppUser = () => {
 	const validationSchema: ValidFormState = [
 		{
 			displayName: useValidator([] as ValidationRule[])
-				.required('Field displayName is required')
+				.required('Field name is required')
 				.min(4, 'Field must be at least 4 characters')
 		},
 		{
@@ -58,7 +58,7 @@ export const AppUser = () => {
 
 				<MyInputText
 					className="input-text"
-					label="displayName"
+					label="Name"
 					name="displayName"
 					type="text"
 					value={displayName} />

@@ -4,7 +4,6 @@ import { FormContext } from "./";
 import { useForm } from '../hooks';
 import { InitialForm, ValidFormState } from '../interfaces/initialState';
 
-
 interface Props {
 	children?: ReactElement | ReactElement[];
 	initialState: InitialForm;

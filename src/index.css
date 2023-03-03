@@ -33,7 +33,9 @@ body {
 	text-transform: uppercase;
 }
 
-input[type="submit"], .input-select, .input-text {
+input[type="submit"],
+.input-select,
+.input-text {
 	padding: 0.8rem;
 	border: none;
 	border-radius: 0.3rem;
@@ -54,7 +56,7 @@ input[type="submit"], .input-select, .input-text {
 input[type="submit"] {
 	background-color: #80008099;
 	width: 20%;
-	color:whitesmoke;
+	color: whitesmoke;
 	margin-top: 2rem;
 	border-radius: 0.8rem;
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -73,20 +75,22 @@ select {
 	border-radius: 4px;
 	background-color: rgba(0, 51, 255, 0.566);
 	width: 60%;
-	color:whitesmoke;
+	color: whitesmoke;
 	font-size: 16px;
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	text-align: center;
 	text-transform: uppercase;
 }
+
 select option {
-  font-size: 1.6rem;
+	font-size: 1.6rem;
 	background-color: #370fd89a;
 	color: white
 }
 
 select::-ms-expand {
-  display: none; /* hide the default arrow in IE10 and IE11 */
+	display: none;
+	/* hide the default arrow in IE10 and IE11 */
 }
 
 label {

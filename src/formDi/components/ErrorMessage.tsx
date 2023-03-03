@@ -7,7 +7,7 @@ interface Props {
 	type: 'error' | 'success';
 }
 
-export const ErrorMessage = ({ type, fieldName }: Props) => {
+export const ErrorMessage = ({ type = 'error', fieldName }: Props) => {
 	const { formValidation, isFormSubmitted } = useContext(FormContext);
 
 	const errorMessages = formValidation[`${fieldName}Valid`];
